@@ -1,0 +1,114 @@
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+.piano {
+    display: flex;
+    position: relative;
+    background-color: #1a1a1a;
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+}
+
+.key {
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+    transition: background-color 0.1s ease;
+}
+
+.key.white {
+    width: 60px;
+    height: 240px;
+    background-color: #ffffff;
+    border: 1px solid #b3b3b3;
+    border-radius: 0 0 5px 5px;
+    box-shadow: inset 0 -5px 0 rgba(0,0,0,0.1);
+}
+
+.key.white.active {
+    background-color: #d1d5db;
+    box-shadow: inset 0 -2px 0 rgba(0,0,0,0.1);
+}
+
+.key.black {
+    width: 38px;
+    height: 140px;
+    background: linear-gradient(to bottom, #4a4a4a, #1a1a1a);
+    border: 1px solid #1a1a1a;
+    border-radius: 0 0 4px 4px;
+    position: absolute;
+    z-index: 1;
+    box-shadow: inset 0 -4px 0 rgba(0,0,0,0.3);
+}
+
+.key.black.active {
+    background: linear-gradient(to bottom, #333, #000);
+    box-shadow: inset 0 -2px 0 rgba(0,0,0,0.3);
+}
+
+.key.black:nth-child(2) { left: 45px; }
+.key.black:nth-child(4) { left: 105px; }
+.key.black:nth-child(7) { left: 225px; }
+.key.black:nth-child(9) { left: 285px; }
+.key.black:nth-child(11) { left: 345px; }
+.key.black:nth-child(14) { left: 465px; }
+.key.black:nth-child(16) { left: 525px; }
+
+.control-btn {
+    padding: 0.75rem 1.25rem;
+    color: white;
+    font-weight: 600;
+    border-radius: 0.5rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease-in-out;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    border: none;
+}
+
+.control-btn:disabled {
+    background-color: #9ca3af;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.control-btn.recording {
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+    70% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+}
+
+/* Mobile first adjustments */
+@media (max-width: 768px) {
+    .piano {
+        transform: scale(0.8);
+        transform-origin: top center;
+    }
+}
+
+@media (max-width: 640px) {
+    .piano {
+        transform: scale(0.6);
+    }
+    .control-btn span {
+        display: none;
+    }
+    .control-btn {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+    }
+}
+
+@media (max-width: 480px) {
+    .piano {
+        transform: scale(0.45);
+    }
+}
