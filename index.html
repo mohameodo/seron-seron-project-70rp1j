@@ -3,59 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Seron Piano</title>
+    <title>K-Pop Beat Piano</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/main.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
-<body class="bg-gray-50 text-gray-800 font-sans flex flex-col items-center justify-center min-h-screen p-4 overflow-hidden">
+<body class="bg-pink-50 flex flex-col items-center justify-center min-h-screen font-sans p-4">
 
-    <div class="w-full max-w-4xl text-center mb-6">
-        <h1 class="text-4xl md:text-5xl font-bold text-gray-900">Interactive Piano</h1>
-        <p class="text-gray-600 mt-2">Play, Record, and Download your melodies.</p>
-    </div>
+    <div id="app-container" class="w-full max-w-4xl bg-white rounded-3xl shadow-2xl p-4 sm:p-8 overflow-hidden">
+        <header class="text-center mb-6">
+            <h1 class="text-4xl sm:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-purple-500">K-Pop Rhythm Piano</h1>
+            <p class="text-gray-500 mt-2">Create your own upbeat melodies!</p>
+        </header>
 
-    <div id="controls" class="bg-white rounded-xl shadow-lg p-4 mb-8 flex items-center justify-center space-x-4 w-full max-w-sm">
-        <button id="recordBtn" class="control-btn bg-red-500 hover:bg-red-600">
-            <i class="fas fa-circle"></i>
-            <span class="ml-2">Record</span>
-        </button>
-        <button id="playBtn" class="control-btn bg-blue-500 hover:bg-blue-600" disabled>
-            <i class="fas fa-play"></i>
-            <span class="ml-2">Play</span>
-        </button>
-        <button id="downloadBtn" class="control-btn bg-green-500 hover:bg-green-600" disabled>
-            <i class="fas fa-download"></i>
-            <span class="ml-2">Download</span>
-        </button>
-    </div>
+        <div id="controls" class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-6">
+            <button id="record-btn" class="control-btn bg-red-500 hover:bg-red-600">
+                <i class="fas fa-circle mr-2"></i>
+                <span>Record</span>
+            </button>
+            <button id="play-btn" class="control-btn bg-blue-500 hover:bg-blue-600" disabled>
+                <i class="fas fa-play mr-2"></i>
+                <span>Play</span>
+            </button>
+            <button id="download-btn" class="control-btn bg-green-500 hover:bg-green-600" disabled>
+                <i class="fas fa-download mr-2"></i>
+                <span>Download</span>
+            </button>
+        </div>
 
-    <div id="piano-container" class="w-full flex justify-center">
-        <div class="piano">
+        <div id="status" class="text-center mb-6 h-6">
+            <p id="status-text" class="text-gray-600 font-semibold"></p>
+        </div>
+
+        <div id="piano" class="relative h-48 sm:h-64 flex justify-center mx-auto select-none">
+            <!-- White Keys -->
             <div class="key white" data-note="C4"></div>
-            <div class="key black" data-note="Db4"></div>
             <div class="key white" data-note="D4"></div>
-            <div class="key black" data-note="Eb4"></div>
             <div class="key white" data-note="E4"></div>
             <div class="key white" data-note="F4"></div>
-            <div class="key black" data-note="Gb4"></div>
             <div class="key white" data-note="G4"></div>
-            <div class="key black" data-note="Ab4"></div>
             <div class="key white" data-note="A4"></div>
-            <div class="key black" data-note="Bb4"></div>
             <div class="key white" data-note="B4"></div>
             <div class="key white" data-note="C5"></div>
-            <div class="key black" data-note="Db5"></div>
-            <div class="key white" data-note="D5"></div>
-            <div class="key black" data-note="Eb5"></div>
-            <div class="key white" data-note="E5"></div>
+            <!-- Black Keys -->
+            <div class="key black" data-note="C#4" style="left: 6.25%;"></div>
+            <div class="key black" data-note="D#4" style="left: 18.75%;"></div>
+            <div class="key black" data-note="F#4" style="left: 43.75%;"></div>
+            <div class="key black" data-note="G#4" style="left: 56.25%;"></div>
+            <div class="key black" data-note="A#4" style="left: 68.75%;"></div>
         </div>
     </div>
 
-    <a href="https://seron.dev" target="_blank" class="fixed bottom-4 right-4 bg-gray-900 text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-lg hover:bg-gray-700 transition-colors duration-300 no-underline">
+    <a href="https://seron.dev" target="_blank" class="fixed bottom-4 right-4 bg-gradient-to-r from-pink-500 to-purple-500 text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-lg hover:scale-105 transition-transform duration-300">
         Made by Seron
     </a>
 
