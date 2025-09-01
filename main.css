@@ -1,36 +1,44 @@
-body {
-    -webkit-user-select: none; /* Safari */
-    -ms-user-select: none; /* IE 10 and IE 11 */
-    user-select: none; /* Standard syntax */
-}
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
-#game-board {
-    touch-action: manipulation;
+body {
+    font-family: 'Poppins', sans-serif;
 }
 
 .tile {
     position: absolute;
-    width: 25%;
-    height: 120px; /* Height of each tile */
-    background-color: white;
+    width: 100%;
+    background-color: #1f2937; /* gray-800 */
+    border-bottom: 4px solid #374151; /* gray-700 */
     will-change: transform;
+    transform: translateZ(0);
+    transition: background-color 0.1s ease-out;
 }
 
-.tile.black {
-    background-color: #333;
-    cursor: pointer;
+.lane {
+    position: relative;
+    height: 100%;
 }
 
-@keyframes fall {
-    from {
-        transform: translateY(-120px);
-    }
-    to {
-        transform: translateY(100vh);
-    }
+.tapped {
+    background-color: #4f46e5; /* indigo-600 */
+    opacity: 0.5;
+    transition: opacity 0.2s ease-out, transform 0.2s ease-out;
+    transform: scale(0.95);
 }
 
-.falling {
-    animation-name: fall;
-    animation-timing-function: linear;
+#game-board {
+    overflow: hidden;
+}
+
+#tap-zone {
+    z-index: 10;
+}
+
+.song-button {
+    transition: all 0.2s ease-in-out;
+}
+
+.song-button:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
