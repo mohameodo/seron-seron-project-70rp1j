@@ -2,93 +2,48 @@ body {
     font-family: 'Poppins', sans-serif;
 }
 
-#piano {
+#game-container {
+    box-shadow: 0 0 25px rgba(236, 72, 153, 0.6);
+}
+
+.tile-row {
+    display: flex;
     width: 100%;
-    max-width: 800px;
-}
-
-.key {
-    position: relative;
-    border: 1px solid #ccc;
-    border-radius: 0 0 8px 8px;
-    cursor: pointer;
-    transition: background-color 0.1s ease, box-shadow 0.1s ease, transform 0.05s ease;
-}
-
-.key.white {
-    width: 12.5%;
-    height: 100%;
-    background-color: #fff;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.key.white:active,
-.key.white.playing {
-    background-color: #f0f8ff;
-    transform: translateY(2px);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.key.black {
+    height: 25%; /* 4 rows visible at a time */
     position: absolute;
-    width: 7.5%;
-    height: 60%;
-    background: linear-gradient(to bottom, #4a4a4a, #2b2b2b);
-    color: white;
-    z-index: 10;
-    border-radius: 0 0 6px 6px;
-    box-shadow: 0 4px 5px rgba(0, 0, 0, 0.3), inset 0 -4px 0 #000;
+    left: 0;
+    will-change: transform;
 }
 
-.key.black:active,
-.key.black.playing {
-    background: linear-gradient(to bottom, #333, #111);
-    transform: translateY(1px);
-    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3), inset 0 -2px 0 #000;
+.tile {
+    flex: 1;
+    border: 1px solid #1f2937; /* border-gray-800 */
+    cursor: pointer;
+    transition: background-color 0.1s ease;
+    background-color: #111827; /* bg-gray-900 */
 }
 
-.control-btn {
-    padding: 0.75rem 1.5rem;
-    color: white;
-    border-radius: 9999px;
-    font-weight: 600;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s ease-in-out;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    transform: translateY(0);
+.tile.magic {
+    background-color: #ec4899; /* bg-pink-500 */
+    box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.3);
 }
 
-.control-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+.tile.tapped {
+    background-color: #a855f7; /* bg-purple-500 */
 }
 
-.control-btn:active {
-    transform: translateY(0);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+.tile.missed {
+    background-color: #ef4444 !important; /* bg-red-500 */
+    animation: shake 0.5s ease;
 }
 
-.control-btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-    transform: translateY(0);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    75% { transform: translateX(10px); }
 }
 
-#record-btn.recording {
-    animation: pulse 1.5s infinite;
-}
-
-@keyframes pulse {
-    0% {
-        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
-    }
-    70% {
-        box-shadow: 0 0 0 10px rgba(239, 68, 68, 0);
-    }
-    100% {
-        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
-    }
+@keyframes fall {
+    from { transform: translateY(-100%); }
+    to { transform: translateY(0); }
 }
