@@ -3,47 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Magic Tiles - Light Mode</title>
+    <title>Rhythm Tiles</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/main.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body class="bg-gray-50 text-gray-800 flex items-center justify-center min-h-screen font-poppins overflow-hidden">
+<body class="bg-gray-100 flex items-center justify-center h-screen font-sans overflow-hidden">
 
-    <div id="game-wrapper" class="w-full max-w-sm h-screen max-h-[800px] bg-white border border-gray-200 relative flex flex-col shadow-lg">
-        <header class="w-full p-4 border-b border-gray-200 flex justify-center items-center">
-            <h1 class="text-2xl font-bold text-gray-700">Score: <span id="score">0</span></h1>
-        </header>
+    <div id="game-container" class="relative w-full max-w-sm h-full bg-white flex flex-col items-center justify-center shadow-lg">
 
-        <main id="game-board" class="w-full flex-grow relative overflow-hidden">
-            <!-- Tiles will be generated here by JavaScript -->
-        </main>
-    </div>
-
-    <div id="start-screen" class="absolute inset-0 bg-gray-900 bg-opacity-50 flex flex-col items-center justify-center text-center z-20">
-        <div class="bg-white p-8 rounded-lg">
-            <h2 class="text-4xl font-bold mb-4 text-gray-800">Magic Tiles</h2>
-            <p class="text-gray-600 mb-6">Tap the dark tiles and don't miss any!</p>
-            <button id="start-button" class="bg-blue-500 text-white font-bold py-3 px-8 rounded-full text-lg hover:bg-blue-600 transition-colors duration-300">
-                <i class="fas fa-play mr-2"></i>Start Game
-            </button>
+        <!-- Start Menu -->
+        <div id="start-menu" class="text-center z-20">
+            <h1 class="text-5xl font-bold text-gray-800 mb-4">Rhythm Tiles</h1>
+            <p class="text-gray-600 mb-8">Select a difficulty to start.</p>
+            <div class="flex flex-col space-y-4">
+                <button data-difficulty="easy" class="difficulty-btn bg-green-400 text-white font-bold py-3 px-6 rounded-lg text-xl hover:bg-green-500 transition-colors">Easy</button>
+                <button data-difficulty="medium" class="difficulty-btn bg-yellow-400 text-white font-bold py-3 px-6 rounded-lg text-xl hover:bg-yellow-500 transition-colors">Medium</button>
+                <button data-difficulty="hard" class="difficulty-btn bg-red-400 text-white font-bold py-3 px-6 rounded-lg text-xl hover:bg-red-500 transition-colors">Hard</button>
+            </div>
         </div>
-    </div>
 
-    <div id="game-over-screen" class="absolute inset-0 bg-gray-900 bg-opacity-50 flex-col items-center justify-center text-center z-20 hidden">
-         <div class="bg-white p-8 rounded-lg">
-            <h2 class="text-4xl font-bold mb-2 text-red-500">Game Over</h2>
-            <p class="text-gray-700 text-xl mb-4">Final Score: <span id="final-score" class="font-bold">0</span></p>
-            <button id="restart-button" class="bg-green-500 text-white font-bold py-3 px-8 rounded-full text-lg hover:bg-green-600 transition-colors duration-300">
-                <i class="fas fa-redo mr-2"></i>Play Again
-            </button>
+        <!-- Game Screen -->
+        <div id="game-screen" class="hidden absolute top-0 left-0 w-full h-full">
+            <div id="score-display" class="absolute top-4 left-1/2 -translate-x-1/2 text-4xl font-bold text-gray-700 z-10">0</div>
+            <div id="game-board" class="relative w-full h-full overflow-hidden">
+                <!-- Lanes -->
+                <div class="absolute inset-0 flex justify-around z-0">
+                    <div class="w-1/4 h-full border-r border-gray-200"></div>
+                    <div class="w-1/4 h-full border-r border-gray-200"></div>
+                    <div class="w-1/4 h-full border-r border-gray-200"></div>
+                    <div class="w-1/4 h-full"></div>
+                </div>
+                <!-- Tap Zone -->
+                <div id="tap-zone" class="absolute bottom-0 left-0 w-full h-24 bg-gray-200/50 border-t-4 border-blue-400 z-10"></div>
+            </div>
         </div>
+
+        <!-- Game Over Modal -->
+        <div id="game-over-menu" class="hidden absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center z-30">
+            <div class="bg-white p-8 rounded-lg text-center shadow-xl">
+                <h2 class="text-4xl font-bold text-gray-800 mb-2">Game Over</h2>
+                <p class="text-gray-600 mb-4">Your score:</p>
+                <p id="final-score" class="text-5xl font-bold text-blue-500 mb-6">0</p>
+                <button id="restart-btn" class="bg-blue-500 text-white font-bold py-3 px-8 rounded-lg text-xl hover:bg-blue-600 transition-colors">Play Again</button>
+            </div>
+        </div>
+
     </div>
 
-    <a href="https://seron.dev" target="_blank" class="fixed bottom-4 right-4 bg-gray-200 text-gray-600 text-xs font-semibold px-3 py-1 rounded-full hover:bg-gray-300 transition-colors duration-200 no-underline">Made by Seron</a>
+    <a href="https://seron.dev" target="_blank" class="absolute bottom-4 right-4 bg-gray-800 text-white text-xs font-semibold px-3 py-1.5 rounded-full hover:bg-black transition-colors no-underline">Made by Seron</a>
 
     <script src="js/main.js"></script>
 </body>
