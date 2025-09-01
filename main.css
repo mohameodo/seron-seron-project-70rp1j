@@ -1,44 +1,65 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
-
 body {
     font-family: 'Poppins', sans-serif;
 }
 
-.tile {
-    position: absolute;
-    width: 100%;
-    background-color: #1f2937; /* gray-800 */
-    border-bottom: 4px solid #374151; /* gray-700 */
-    will-change: transform;
-    transform: translateZ(0);
-    transition: background-color 0.1s ease-out;
-}
-
 .lane {
     position: relative;
+    float: left;
+    width: 25%;
     height: 100%;
+    border-right: 1px solid #e2e8f0; /* slate-200 */
+    box-sizing: border-box;
 }
 
-.tapped {
-    background-color: #4f46e5; /* indigo-600 */
-    opacity: 0.5;
-    transition: opacity 0.2s ease-out, transform 0.2s ease-out;
+.lane:first-child {
+    border-left: 1px solid #e2e8f0; /* slate-200 */
+}
+
+.tile {
+    position: absolute;
+    left: 5%;
+    width: 90%;
+    background-color: #3b82f6; /* blue-500 */
+    border-radius: 8px;
+    animation: fall linear;
+    will-change: transform;
+}
+
+.tile.long {
+    background-image: linear-gradient(to bottom, #60a5fa, #3b82f6);
+}
+
+.tile.active {
+    background-color: #2563eb; /* blue-600 */
     transform: scale(0.95);
+    transition: background-color 0.05s, transform 0.05s;
 }
 
-#game-board {
-    overflow: hidden;
+.tile.hit {
+   animation: hit-animation 0.2s ease-out forwards;
 }
 
-#tap-zone {
-    z-index: 10;
+@keyframes fall {
+    from {
+        transform: translateY(-100%);
+    }
+    to {
+        transform: translateY(100vh);
+    }
 }
 
-.song-button {
-    transition: all 0.2s ease-in-out;
+@keyframes hit-animation {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1.5);
+        opacity: 0;
+    }
 }
 
-.song-button:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+#game-over-screen.show > div {
+    transform: scale(1);
+    opacity: 1;
 }
