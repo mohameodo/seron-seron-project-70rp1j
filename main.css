@@ -2,48 +2,43 @@ body {
     font-family: 'Poppins', sans-serif;
 }
 
-#game-container {
-    box-shadow: 0 0 25px rgba(236, 72, 153, 0.6);
+#game-board {
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
 }
 
 .tile-row {
+    position: absolute;
     display: flex;
     width: 100%;
-    height: 25%; /* 4 rows visible at a time */
-    position: absolute;
-    left: 0;
-    will-change: transform;
+    height: 25%; /* Each row takes up a quarter of the board height */
 }
 
 .tile {
     flex: 1;
-    border: 1px solid #1f2937; /* border-gray-800 */
-    cursor: pointer;
-    transition: background-color 0.1s ease;
-    background-color: #111827; /* bg-gray-900 */
+    border-left: 1px solid #e5e7eb; /* border-gray-200 */
+    border-bottom: 1px solid #e5e7eb; /* border-gray-200 */
+    transition: background-color 0.1s ease-out;
 }
 
-.tile.magic {
-    background-color: #ec4899; /* bg-pink-500 */
-    box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.3);
+.tile:first-child {
+    border-left: none;
+}
+
+.tile.white {
+    background-color: #ffffff; /* bg-white */
+}
+
+.tile.black {
+    background-color: #374151; /* bg-gray-700 */
+    cursor: pointer;
 }
 
 .tile.tapped {
-    background-color: #a855f7; /* bg-purple-500 */
+    background-color: #d1d5db; /* bg-gray-300 */
 }
 
 .tile.missed {
-    background-color: #ef4444 !important; /* bg-red-500 */
-    animation: shake 0.5s ease;
-}
-
-@keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-10px); }
-    75% { transform: translateX(10px); }
-}
-
-@keyframes fall {
-    from { transform: translateY(-100%); }
-    to { transform: translateY(0); }
+    background-color: #ef4444; /* bg-red-500 */
 }
