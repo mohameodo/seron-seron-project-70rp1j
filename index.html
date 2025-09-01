@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Magic Tiles</title>
+    <title>Magic Tiles - Light Mode</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/main.css">
@@ -11,37 +11,39 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
-<body class="bg-gray-900 text-white font-poppins flex items-center justify-center h-screen overflow-hidden">
+<body class="bg-gray-50 text-gray-800 flex items-center justify-center min-h-screen font-poppins overflow-hidden">
 
-    <div id="game-container" class="relative w-full max-w-sm h-full bg-black overflow-hidden border-x-4 border-pink-500 shadow-lg shadow-pink-500/50">
-        <div id="tiles-container" class="absolute top-0 left-0 w-full h-full"></div>
+    <div id="game-wrapper" class="w-full max-w-sm h-screen max-h-[800px] bg-white border border-gray-200 relative flex flex-col shadow-lg">
+        <header class="w-full p-4 border-b border-gray-200 flex justify-center items-center">
+            <h1 class="text-2xl font-bold text-gray-700">Score: <span id="score">0</span></h1>
+        </header>
+
+        <main id="game-board" class="w-full flex-grow relative overflow-hidden">
+            <!-- Tiles will be generated here by JavaScript -->
+        </main>
     </div>
 
-    <div id="ui-container" class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-        <div id="score-display" class="absolute top-8 text-5xl font-bold text-pink-400 tracking-wider" style="text-shadow: 0 0 10px #f472b6, 0 0 20px #f472b6;">0</div>
-        
-        <div id="start-screen" class="flex flex-col items-center justify-center bg-black bg-opacity-70 p-10 rounded-2xl pointer-events-auto backdrop-blur-sm">
-            <h1 class="text-5xl font-bold mb-2 text-pink-400">Magic Tiles</h1>
-            <p class="text-gray-300 mb-8">Tap the pink tiles to the beat!</p>
-            <button id="start-button" class="bg-pink-500 hover:bg-pink-600 text-white font-bold py-4 px-10 rounded-full text-xl transition-transform transform hover:scale-105 shadow-lg shadow-pink-500/50">
+    <div id="start-screen" class="absolute inset-0 bg-gray-900 bg-opacity-50 flex flex-col items-center justify-center text-center z-20">
+        <div class="bg-white p-8 rounded-lg">
+            <h2 class="text-4xl font-bold mb-4 text-gray-800">Magic Tiles</h2>
+            <p class="text-gray-600 mb-6">Tap the dark tiles and don't miss any!</p>
+            <button id="start-button" class="bg-blue-500 text-white font-bold py-3 px-8 rounded-full text-lg hover:bg-blue-600 transition-colors duration-300">
                 <i class="fas fa-play mr-2"></i>Start Game
             </button>
         </div>
+    </div>
 
-        <div id="game-over-screen" class="hidden flex-col items-center justify-center bg-black bg-opacity-70 p-10 rounded-2xl pointer-events-auto backdrop-blur-sm">
+    <div id="game-over-screen" class="absolute inset-0 bg-gray-900 bg-opacity-50 flex-col items-center justify-center text-center z-20 hidden">
+         <div class="bg-white p-8 rounded-lg">
             <h2 class="text-4xl font-bold mb-2 text-red-500">Game Over</h2>
-            <p class="text-xl mb-2">Your Score:</p>
-            <p id="final-score" class="text-6xl font-bold mb-8 text-pink-400">0</p>
-            <button id="restart-button" class="bg-pink-500 hover:bg-pink-600 text-white font-bold py-4 px-10 rounded-full text-xl transition-transform transform hover:scale-105 shadow-lg shadow-pink-500/50">
+            <p class="text-gray-700 text-xl mb-4">Final Score: <span id="final-score" class="font-bold">0</span></p>
+            <button id="restart-button" class="bg-green-500 text-white font-bold py-3 px-8 rounded-full text-lg hover:bg-green-600 transition-colors duration-300">
                 <i class="fas fa-redo mr-2"></i>Play Again
             </button>
         </div>
     </div>
 
-    <a href="https://seron.dev" target="_blank" class="absolute bottom-4 right-4 bg-gray-800 text-white text-xs font-semibold px-3 py-1.5 rounded-full hover:bg-pink-500 transition-colors shadow-lg">Made by Seron</a>
-
-    <audio id="tap-sound" src="https://cdn.jsdelivr.net/gh/SeronDev/cdn/m/t1.mp3" preload="auto"></audio>
-    <audio id="miss-sound" src="https://cdn.jsdelivr.net/gh/SeronDev/cdn/m/t2.mp3" preload="auto"></audio>
+    <a href="https://seron.dev" target="_blank" class="fixed bottom-4 right-4 bg-gray-200 text-gray-600 text-xs font-semibold px-3 py-1 rounded-full hover:bg-gray-300 transition-colors duration-200 no-underline">Made by Seron</a>
 
     <script src="js/main.js"></script>
 </body>
