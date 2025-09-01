@@ -4,64 +4,78 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rhythm Tiles</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
 </head>
-<body class="bg-gray-50 text-gray-800 flex items-center justify-center min-h-screen font-poppins overflow-hidden">
+<body class="bg-slate-50 text-slate-800 flex items-center justify-center min-h-screen font-sans overflow-hidden">
 
-    <div id="game-container" class="w-full max-w-sm h-screen sm:h-[80vh] sm:max-h-[900px] sm:rounded-2xl bg-white border border-gray-200 shadow-lg flex flex-col relative overflow-hidden">
+    <div id="game-container" class="relative w-full max-w-md h-[100vh] max-h-[900px] bg-white shadow-xl overflow-hidden">
 
-        <!-- Song Selection Screen -->
-        <div id="start-screen" class="w-full h-full flex flex-col items-center justify-center p-8 text-center">
-            <h1 class="text-4xl font-bold text-blue-600 mb-4">Rhythm Tiles</h1>
-            <p class="text-gray-600 mb-8">Select a song to start playing!</p>
-            <div id="song-list" class="w-full space-y-4">
-                <!-- Song buttons will be injected here by JS -->
+        <!-- Start Screen -->
+        <div id="start-screen" class="absolute inset-0 z-30 bg-slate-50 flex flex-col items-center justify-center p-8 text-center">
+            <h1 class="text-5xl font-bold text-blue-500 mb-4">Rhythm Flow</h1>
+            <p class="text-slate-600 mb-8">Paste a YouTube link to start playing.</p>
+            <div class="w-full mb-4">
+                <input type="text" id="youtube-link-input" placeholder="https://www.youtube.com/watch?v=..." class="w-full px-4 py-3 border-2 border-slate-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition">
             </div>
+            <button id="play-button" class="w-full bg-blue-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-600 transition-transform transform hover:scale-105 active:scale-100 flex items-center justify-center space-x-2">
+                <i class="fas fa-play"></i>
+                <span>Start Game</span>
+            </button>
+            <p id="error-message" class="text-red-500 mt-4 h-5"></p>
         </div>
 
         <!-- Game Screen -->
-        <div id="game-screen" class="hidden w-full h-full flex flex-col relative">
-            <div class="absolute top-0 left-0 w-full p-4 z-20 flex justify-between items-center bg-white/80 backdrop-blur-sm">
-                 <div id="score-display" class="text-left">
-                    <span class="text-sm font-semibold text-gray-500 block">SCORE</span>
-                    <span id="score" class="text-3xl font-bold text-blue-600">0</span>
-                </div>
-                <div class="text-right">
-                    <span class="text-sm font-semibold text-gray-500 block">HIGH SCORE</span>
-                    <span id="high-score" class="text-3xl font-bold text-gray-400">0</span>
+        <div id="game-screen" class="hidden absolute inset-0 z-20">
+            <div id="player-wrapper" class="absolute top-0 left-0 w-full h-1/2 opacity-20 z-0">
+                 <div id="player"></div>
+            </div>
+            <div class="absolute top-4 left-4 right-4 z-10 bg-black/10 backdrop-blur-sm p-3 rounded-lg">
+                <div class="flex justify-between items-center">
+                    <div class="text-left">
+                        <p class="text-sm font-bold text-slate-900">SCORE</p>
+                        <p id="score" class="text-3xl font-bold text-slate-900">0</p>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-sm font-bold text-slate-900">SPEED</p>
+                        <p id="speed-display" class="text-3xl font-bold text-slate-900">1.0x</p>
+                    </div>
                 </div>
             </div>
-            <div id="game-board" class="w-full flex-grow relative grid grid-cols-4">
-                <div class="lane h-full border-r border-gray-200"></div>
-                <div class="lane h-full border-r border-gray-200"></div>
-                <div class="lane h-full border-r border-gray-200"></div>
-                <div class="lane h-full"></div>
-                <div id="tap-zone" class="absolute bottom-0 left-0 w-full h-24 bg-blue-100/50 border-t-4 border-blue-500"></div>
+
+            <div id="game-board" class="absolute inset-0 w-full h-full select-none">
+                <div class="lane"></div>
+                <div class="lane"></div>
+                <div class="lane"></div>
+                <div class="lane"></div>
             </div>
-             <div id="player-container" class="absolute -top-full -left-full w-0 h-0 opacity-0">
-                <div id="player"></div>
+
+            <div id="tap-zone" class="absolute bottom-0 left-0 w-full h-1/4 bg-gradient-to-t from-white via-white/80 to-transparent z-10 pointer-events-none">
+                <div class="absolute bottom-10 left-0 w-full border-t-4 border-blue-400 border-dashed"></div>
             </div>
         </div>
 
-        <!-- Game Over Screen -->
-        <div id="game-over-screen" class="hidden w-full h-full flex-col items-center justify-center p-8 text-center bg-white/80 backdrop-blur-sm absolute inset-0 z-30">
-            <h2 class="text-3xl font-bold text-red-500 mb-2">Game Over</h2>
-            <p class="text-gray-700 mb-4">Your Score: <span id="final-score" class="font-bold text-2xl">0</span></p>
-            <button id="restart-button" class="mt-4 bg-blue-600 text-white font-bold py-3 px-8 rounded-full hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 transition-transform transform hover:scale-105">
-                <i class="fas fa-redo mr-2"></i> Play Again
-            </button>
+        <!-- Game Over Modal -->
+        <div id="game-over-screen" class="hidden absolute inset-0 z-40 bg-black/40 backdrop-blur-sm flex items-center justify-center p-4">
+            <div class="bg-white rounded-2xl shadow-2xl p-8 text-center w-full max-w-sm transform scale-95 opacity-0 transition-all duration-300">
+                <h2 class="text-4xl font-bold text-blue-500 mb-2">Game Over</h2>
+                <p class="text-slate-600 mb-4">Your final score is:</p>
+                <p id="final-score" class="text-6xl font-extrabold text-slate-800 mb-8">0</p>
+                <button id="play-again-button" class="w-full bg-blue-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-600 transition-transform transform hover:scale-105 active:scale-100 flex items-center justify-center space-x-2">
+                    <i class="fas fa-redo"></i>
+                    <span>Play Again</span>
+                </button>
+            </div>
         </div>
 
     </div>
     
-    <a href="https://seron.dev" target="_blank" class="absolute bottom-4 right-4 bg-black text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-lg hover:bg-gray-800 transition-colors">Made by Seron</a>
+    <a href="https://seron.dev" target="_blank" class="absolute bottom-4 right-4 bg-slate-800 text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-lg hover:bg-blue-500 transition-colors duration-300 z-50">Made by Seron</a>
 
-    <script src="https://www.youtube.com/iframe_api"></script>
     <script src="js/main.js"></script>
 </body>
 </html>
